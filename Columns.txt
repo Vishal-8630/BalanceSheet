@@ -1,0 +1,22 @@
+LR No. -> String
+LR Date -> Date
+Vehicle No -> String
+Vehicle Type -> String
+From -> String
+To -> String
+Reporting Date -> Date
+Uploading Date -> Date
+POD Date -> Date
+Freight -> Whole Number
+Advance -> Whole Number
+Detention -> Whole Number
+Warai -> Whole Number
+Penalty Charges -> Whole Number
+Balance -> Whole Numer
+Total Balance -> Whole Number
+TDS -> Whole Number
+Payable Amount -> Whole Number
+
+
+
+======== Pages =========== 

@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+// Colors and Variables
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$background-color: #e4e4e4;
+$text-color: #333;
+
+// Breakpoint variables
+$breakpoints: (
+  small: 576px,
+  medium: 768px,
+  large: 992px,
+  xlarge: 1300px,
+);
+
+@mixin respond($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-has-key($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+
+  @else {
+    @warn "Breakpoint '#{$breakpoint}' not found!";
+  }
+}
+
+// Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', 'sans-serif';
+}
+
+body {
+  background-color: $background-color;
+  color: $text-color;
+  line-height: 1.6;
+}
+
+// Container
+.container {
+  margin: 0 auto;
+  max-width: 100%;
+  background-color: white;
+
+  @include respond(medium) {
+    max-width: 90%;
+  }
+
+  @include respond(large) {
+    max-width: 90%;
+  }
+
+  @include respond(xlarge) {
+    max-width: 80%;
+  }
+}
+
+// Buttons
+.button {
+  display: inline-block;
+  padding: 0.7em 1.1em;
+  font-size: 0.9rem;
+  color: white;
+  background-color: $primary-color;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  @include respond(medium) {
+    padding: 0.8em 1.2em;
+    font-size: 1.1rem;
+  }
+
+  @include respond(xlarge) {
+    padding: 0.8rem 1.6rem;
+  }
+}
+
+// Header
+.header {
+  text-align: center;
+  font-size: 1.5rem;
+
+  @include respond(medium) {
+    font-size: 2rem;
+  }
+}
+
+// Table Styling
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    background: $secondary-color;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background: lighten($background-color, 5%);
+  }
+}
+
+// Form Styles
+.form-group {
+  min-width: 30rem;
+
+  label {
+    display: block;
+    font-weight: bold;
+    font-size: 1.2rem;
+
+    @include respond(large) {
+      font-size: 1.3rem;
+    }
+
+    @include respond(xlarge) {
+      font-size: 1.5rem;
+    }
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: none;
+    box-shadow: 1px 1px 5px 0.2px rgba(0, 0, 0, 0.7);
+    border-radius: 2px;
+    padding: 0.6em;
+    font-size: 1rem;
+    outline: none;
+
+    @include respond(medium) {
+      padding: 0.8em;
+    }
+
+    @include respond(large) {
+      padding: 0.9em;
+    }
+  }
+
+  .form__input {
+    width: 90%;
+    margin: 1rem auto;
+
+    @include respond(large) {
+      width: 80%;
+    }
+
+    @include respond(xlarge) {
+      width: 70%;
+    }
+  }
+
+  .form__buttons {
+    text-align: center;
+    padding: 1rem 2rem;
+  }
+}
+
+@media print {
+
+  button,
+  a {
+    display: none;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+}
+
+.main__page__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.btn {
+  text-align: center;
+  padding: 1rem 2rem;
+  cursor: pointer;
+}
+
+.line__1,
+.line__2,
+.line__3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // padding: 1rem 4rem;
+  padding-right: 6rem;
+  padding-left: 5rem;
+}
+
+.left,
+.right,
+.middle {
+  display: flex;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.value {
+  margin-left: 5rem;
+}
+
+.line__2 {
+  .right {
+    .value {
+      margin-left: 14.1rem;
+    }
+  }
+}
+
+.line__3 {
+  .left {
+    .value {
+      margin-left: 7.2rem;
+    }
+  }
+}
+
+.line__3 {
+  .right {
+    .value {
+      margin-left: 16.3rem;
+    }
+  }
+}
+
+.address__para {
+  padding-left: 5rem;
+  margin: 3rem 0;
+}
+
+.address__line__1 {
+  font-weight: bold;
+  margin-bottom: 1px;
+}
+
+.address__line__2 {
+  margin-bottom: 1px;
+}
+
+.contact__info__line__1,
+.contact__info__line__2 {
+  display: flex;
+  
+}
+
+.contact__info__left,
+.contact__info__right {
+  display: flex;
+}
+
+.contact__info__right {
+  margin-left: 20rem;
+}
+
+.contact__info__title {
+  font-weight: bold;
+}
+
+.contact__info__value {
+  margin-left: 3rem;
+}
+
+.contact__info__line__1 {
+  .contact__info__right {
+    .contact__info__title {
+      margin-left: 1.5rem;
+    }
+  }
+}
+
+.contact__info__line__2 {
+  .contact__info__left {
+    .contact__info__value {
+      margin-left: 5.2rem;
+    }
+  }
+}
+
+hr {
+  border: 1px solid black;
+}
