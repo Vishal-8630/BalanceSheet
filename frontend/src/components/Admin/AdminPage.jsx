@@ -61,6 +61,19 @@ const AdminPage = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+        const answer = confirm("Do you want to delete the admin?");
+        if (answer) {
+            const result = await axios.delete(`http://localhost:5000/api/delete-admin/${id}`);
+            toast.success(result.data.message);
+            setAllAdmins((prev) => prev.filter(admin => admin._id !== id));
+        }
+    } catch (error) {
+        console.log("Error deleting the admin", error);
+    }
+  }
+
   const adminLoginForm = (
     <div>
       <h1 className="header">Enter Admin Details</h1>
@@ -159,7 +172,7 @@ const AdminPage = () => {
               <tr key={admin._id}>
                 <td>{admin.username}</td>
                 <td>
-                    
+                    <button className="btn" onClick={() => handleDelete(admin._id)}>Delete</button>
                 </td>
               </tr>
             ))}

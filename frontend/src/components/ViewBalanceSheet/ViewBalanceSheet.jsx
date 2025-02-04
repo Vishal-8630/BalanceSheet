@@ -299,10 +299,11 @@ const ViewBalanceSheet = () => {
         </div>
       </form>
       <div>
-        <button onClick={() => navigate(`/edit-balance-sheet/${formData._id}`)}>
+        <button className="button" onClick={() => navigate(`/edit-balance-sheet/${formData._id}`)}>
           Edit
         </button>
         <button
+          className="button"
           onClick={() => handleDelete(formData._id)}
           style={{ marginLeft: "10px", color: "red" }}
         >
