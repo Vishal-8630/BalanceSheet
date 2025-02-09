@@ -36,7 +36,7 @@ $breakpoints: (
 }
 
 body {
-  background-color: $background-color;
+  background-color: white;
   color: $text-color;
   line-height: 1.6;
 }
@@ -44,20 +44,7 @@ body {
 // Container
 .container {
   margin: 0 auto;
-  max-width: 100%;
-  background-color: white;
-
-  @include respond(medium) {
-    max-width: 90%;
-  }
-
-  @include respond(large) {
-    max-width: 90%;
-  }
-
-  @include respond(xlarge) {
-    max-width: 80%;
-  }
+  max-width: 90%;
 }
 
 // Buttons
@@ -95,6 +82,13 @@ body {
   @include respond(medium) {
     font-size: 2rem;
   }
+}
+
+.underline {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 2px;
+  margin: 10px 0;
 }
 
 // Table Styling
@@ -190,6 +184,10 @@ body {
   }
 }
 
+#print-page {
+  padding-top: 3rem;
+}
+
 .main__page__buttons {
   display: flex;
   flex-direction: row;
@@ -203,15 +201,17 @@ body {
   cursor: pointer;
 }
 
+.company__details {
+  margin: 2rem 0;
+}
+
 .line__1,
 .line__2,
 .line__3 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  // padding: 1rem 4rem;
-  padding-right: 6rem;
-  padding-left: 5rem;
+  padding: 0px 1.5rem;
 }
 
 .left,
@@ -253,8 +253,8 @@ body {
 }
 
 .address__para {
-  padding-left: 5rem;
-  margin: 3rem 0;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
 }
 
 .address__line__1 {
@@ -307,4 +307,60 @@ body {
 
 hr {
   border: 1px solid black;
+}
+
+// -------------------- Navbar ----------------
+
+.navbar {
+  background-color: $background-color;
+}
+
+.navbar__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 6rem;
+  line-height: 70px;
+
+  h1 {
+    user-select: none;
+  }
+
+  .navbar__ul {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    font-weight: bold;
+
+    &__li {
+
+      button {
+        outline: none;
+        border: none;
+        background: none;
+        font-weight: bold;
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+        color: rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease-in-out;
+        user-select: none;
+
+        &:hover {
+          color: black;
+        }
+      }
+
+      a {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease-in-out;
+        user-select: none;
+
+        &:hover {
+          color: black;
+        }
+      }
+    }
+  }
 }

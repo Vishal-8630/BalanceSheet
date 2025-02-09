@@ -1,12 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 
 const BalanceDetails = () => {
   const [allBalanceSheet, setAllBalanceSheet] = useState([]);
-  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     getAllBalanceSheet();
@@ -18,6 +14,7 @@ const BalanceDetails = () => {
         "http://localhost:5000/api/get-all-balance-sheet"
       );
       setAllBalanceSheet(result.data);
+      localStorage.setItem("allBalanceSheet", JSON.stringify(result.data));
     } catch (error) {
       console.error("Error fetching balance sheets:", error);
     }
@@ -50,76 +47,52 @@ const BalanceDetails = () => {
     }
   );
 
-  const handlePrint = () => {
-    window.print();
-  };
-
-  const handleDownloadPDF = () => {
-    if (allBalanceSheet.length > 0) {
-      const table = document.getElementById("print-page");
-
-      html2canvas(table).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-        const imgWidth = 190; // A4 width (210mm - margins)
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-        pdf.save("balance-sheet.pdf");
-      });
-    } else {
-      alert("Please add atleast one balance sheet to download the data");
-    }
-  };
-
   return (
-    <div className="">
+    <div className="container">
       <div id="print-page">
-        <hr />
+        <div className="underline"></div>
         <h1 className="header">Balance Details</h1>
-        <hr />
-        <br />
-        <br />
-        <div className="line__1">
-          <div className="left">
-            <div className="title">Supplier</div>
-            <div className="value">SHREE SHYAM ROAD LINES</div>
-          </div>
-          <div className="right">
-            <div className="title">Receipt No.</div>
-            <div className="value">DI/SR/RCPT202401661</div>
-          </div>
-        </div>
-        <div className="line__2">
-          <div className="left">
-            <div className="title">Address</div>
-            <div className="value">
-              MAHENDRA SINGH YAMUNA VIHAR COLONY BALDEV ROAD, NEAR ESSAR PUMP,
-              LOHAVAN, LOHABAN , MATHURA UTTAR PRADESH- 281204
+        <div className="underline"></div>
+        <div className="company__details">
+          <div className="line__1">
+            <div className="left">
+              <div className="title">Supplier</div>
+              <div className="value">SHREE SHYAM ROAD LINES</div>
+            </div>
+            <div className="right">
+              <div className="title">Receipt No.</div>
+              <div className="value">DI/SR/RCPT202401661</div>
             </div>
           </div>
-          <div className="right">
-            <div className="title">Date</div>
-            <div className="value">25-01-2025</div>
+          <div className="line__2">
+            <div className="left">
+              <div className="title">Address</div>
+              <div className="value">
+                MAHENDRA SINGH YAMUNA VIHAR COLONY BALDEV ROAD, NEAR ESSAR PUMP,
+                LOHAVAN, LOHABAN , MATHURA UTTAR PRADESH- 281204
+              </div>
+            </div>
+            <div className="right">
+              <div className="title">Date</div>
+              <div className="value">25-01-2025</div>
+            </div>
+          </div>
+          <div className="line__3">
+            <div className="left">
+              <div className="title">City</div>
+              <div className="value">Mathura-UP</div>
+            </div>
+            <div className="middle">
+              <div className="title">Contact No.</div>
+              <div className="value">8630836045</div>
+            </div>
+            <div className="right">
+              <div className="title">GST No.</div>
+              <div className="value">NA</div>
+            </div>
           </div>
         </div>
-        <div className="line__3">
-          <div className="left">
-            <div className="title">City</div>
-            <div className="value">Mathura-UP</div>
-          </div>
-          <div className="middle">
-            <div className="title">Contact No.</div>
-            <div className="value">8630836045</div>
-          </div>
-          <div className="right">
-            <div className="title">GST No.</div>
-            <div className="value">NA</div>
-          </div>
-        </div>
-        <br />
-        <br />
-        <hr />
+        <div className="underline"></div>
         <div className="address__para">
           <div className="address_lines">
             <div className="address__line__1">DVS International Pvt. Ltd.</div>
@@ -140,7 +113,7 @@ const BalanceDetails = () => {
               </div>
             </div>
             <div className="contact__info__line__2">
-            <div className="contact__info__left">
+              <div className="contact__info__left">
                 <div className="contact__info__title">GST IN</div>
                 <div className="contact__info__value">27AAKCD3593N1ZY</div>
               </div>
@@ -231,20 +204,6 @@ const BalanceDetails = () => {
             )}
           </tbody>
         </table>
-      </div>
-      <br />
-      <br />
-      <div className="main__page__buttons">
-        <Link to='/add-balance-sheet'>
-        <button className="btn">Add Balance Sheet</button>
-        </Link>
-        <button onClick={handlePrint} className="btn">
-          Print Table
-        </button>
-        <button onClick={handleDownloadPDF} className="btn">
-          Download PDF
-        </button>
-        <Link to='/admin-mode' className="btn"><button className="btn">Admin Mode</button></Link>
       </div>
     </div>
   );
