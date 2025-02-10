@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../../contexts/AuthContext";
 
 const AdminPage = () => {
   const [allAdmins, setAllAdmins] = useState([]);
@@ -16,6 +17,7 @@ const AdminPage = () => {
   });
   const [isSeeAllAdminMode, setIsSeeAllAdminMode] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const getAllAdmins = async () => {
@@ -29,6 +31,12 @@ const AdminPage = () => {
       console.error("Error fetching all admins", error);
     }
   };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+        navigate("/");
+      }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     getAllAdmins();
@@ -63,20 +71,22 @@ const AdminPage = () => {
 
   const handleDelete = async (id) => {
     try {
-        const answer = confirm("Do you want to delete the admin?");
-        if (answer) {
-            const result = await axios.delete(`http://localhost:5000/api/delete-admin/${id}`);
-            toast.success(result.data.message);
-            setAllAdmins((prev) => prev.filter(admin => admin._id !== id));
-        }
+      const answer = confirm("Do you want to delete the admin?");
+      if (answer) {
+        const result = await axios.delete(
+          `http://localhost:5000/api/delete-admin/${id}`
+        );
+        toast.success(result.data.message);
+        setAllAdmins((prev) => prev.filter((admin) => admin._id !== id));
+      }
     } catch (error) {
-        console.log("Error deleting the admin", error);
+      console.log("Error deleting the admin", error);
     }
-  }
+  };
 
   const adminLoginForm = (
-    <div>
-      <h1 className="header">Enter Admin Details</h1>
+    <div className="form__container">
+      <h1 className="header">Login Admin</h1>
       <form className="form-group" onSubmit={handleFormSubmit}>
         <div className="form__input">
           <label htmlFor="username">Username</label>
@@ -110,8 +120,8 @@ const AdminPage = () => {
   );
 
   const adminSignupForm = (
-    <div>
-      <h1 className="header">Create New Admin</h1>
+    <div className="form__container">
+      <h1 className="header">Create Admin</h1>
       <form className="form-group" onSubmit={handleFormSubmit}>
         <div className="form__input">
           <label htmlFor="username">Username</label>
@@ -172,7 +182,12 @@ const AdminPage = () => {
               <tr key={admin._id}>
                 <td>{admin.username}</td>
                 <td>
-                    <button className="btn" onClick={() => handleDelete(admin._id)}>Delete</button>
+                  <button
+                    className="btn"
+                    onClick={() => handleDelete(admin._id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -183,8 +198,7 @@ const AdminPage = () => {
   );
 
   return (
-    <div>
-      <Link to="/">Home</Link>
+    <div className="container">
       <button
         className="btn"
         onClick={() => setIsSeeAllAdminMode((prev) => !prev)}

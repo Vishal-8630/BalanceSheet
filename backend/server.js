@@ -6,6 +6,7 @@ const connectDB = require("./db");
 connectDB();
 
 const BalanceSheetRouter = require("./routes/BalanceSheetRoutes");
+const AuthenticationRouter = require("./routes/AuthenticationRoutes");
 const AdminRouter = require("./routes/AdminRoutes");
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api", BalanceSheetRouter);
+app.use("/api/auth", AuthenticationRouter)
 app.use("/api", AdminRouter);
 
 

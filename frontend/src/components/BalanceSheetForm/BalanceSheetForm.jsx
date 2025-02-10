@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../../contexts/AuthContext";
 
 function BalanceSheetForm() {
   const [formData, setFormData] = useState({
@@ -27,9 +28,16 @@ function BalanceSheetForm() {
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [message, setMessage] = useState("");
+  const { isAuthenticated } = useAuth();
 
   const navigate = useNavigate();
   const { id } = useParams(); // Get ID from URL if available
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+        navigate("/");
+      }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     if (id) {
@@ -102,251 +110,250 @@ function BalanceSheetForm() {
 
   return (
     <div className="container">
-      <div className="back__links">
-        <Link to="/">Home</Link>
+      <div className="form__container">
+        <h2 className="header">
+          {isEditMode ? "Update Balance Sheet" : "Add Balance Sheet"}
+        </h2>
+
+        <form onSubmit={handleSubmit} className="form-group">
+          <div className="form__input">
+            <label htmlFor="lrNo">LR No</label>
+            <input
+              type="text"
+              id="lrNo"
+              name="lrNo"
+              placeholder="LR No"
+              value={formData.lrNo}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="lrDate">LR Date</label>
+            <input
+              type="date"
+              id="lrDate"
+              name="lrDate"
+              value={formData.lrDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="vehicleNo">Vehicle No</label>
+            <input
+              type="text"
+              id="vehicleNo"
+              name="vehicleNo"
+              placeholder="Vehicle No"
+              value={formData.vehicleNo}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="vehicleType">Vehicle Type</label>
+            <input
+              type="text"
+              id="vehicleType"
+              name="vehicleType"
+              placeholder="Vehicle Type"
+              value={formData.vehicleType}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="from">From</label>
+            <input
+              type="text"
+              id="from"
+              name="from"
+              placeholder="From"
+              value={formData.from}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="to">To</label>
+            <input
+              type="text"
+              id="to"
+              name="to"
+              placeholder="To"
+              value={formData.to}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="reportingDate">Reporting Date</label>
+            <input
+              type="date"
+              id="reportingDate"
+              name="reportingDate"
+              value={formData.reportingDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="uploadingDate">Uploading Date</label>
+            <input
+              type="date"
+              id="uploadingDate"
+              name="uploadingDate"
+              value={formData.uploadingDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="podDate">POD Date</label>
+            <input
+              type="date"
+              id="podDate"
+              name="podDate"
+              value={formData.podDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="freight">Freight</label>
+            <input
+              type="number"
+              id="freight"
+              name="freight"
+              placeholder="Freight"
+              value={formData.freight}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="advance">Advance</label>
+            <input
+              type="number"
+              id="advance"
+              name="advance"
+              placeholder="Advance"
+              value={formData.advance}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="detention">Detention</label>
+            <input
+              type="number"
+              id="detention"
+              name="detention"
+              placeholder="Detention"
+              value={formData.detention}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="warai">Warai</label>
+            <input
+              type="number"
+              id="warai"
+              name="warai"
+              placeholder="Warai"
+              value={formData.warai}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="penaltyCharges">Penalty Charges</label>
+            <input
+              type="number"
+              id="penaltyCharges"
+              name="penaltyCharges"
+              placeholder="Penalty Charges"
+              value={formData.penaltyCharges}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="balance">Balance</label>
+            <input
+              type="number"
+              id="balance"
+              name="balance"
+              placeholder="Balance"
+              value={formData.balance}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="totalBalance">Total Balance</label>
+            <input
+              type="number"
+              id="totalBalance"
+              name="totalBalance"
+              placeholder="Total Balance"
+              value={formData.totalBalance}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="tds">TDS</label>
+            <input
+              type="number"
+              id="tds"
+              name="tds"
+              placeholder="TDS"
+              value={formData.tds}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__input">
+            <label htmlFor="payableAmount">Payable Amount</label>
+            <input
+              type="number"
+              id="payableAmount"
+              name="payableAmount"
+              placeholder="Payable Amount"
+              value={formData.payableAmount}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form__buttons">
+            <button type="submit" className="button">
+              {isEditMode ? "Update Balance Sheet" : "Add Balance Sheet"}
+            </button>
+          </div>
+        </form>
+        {message && <p>{message}</p>}
       </div>
-      <h2 className="header">
-        {isEditMode ? "Update Balance Sheet" : "Add Balance Sheet"}
-      </h2>
-
-      <form onSubmit={handleSubmit} className="form-group">
-        <div className="form__input">
-          <label htmlFor="lrNo">LR No</label>
-          <input
-            type="text"
-            id="lrNo"
-            name="lrNo"
-            placeholder="LR No"
-            value={formData.lrNo}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="lrDate">LR Date</label>
-          <input
-            type="date"
-            id="lrDate"
-            name="lrDate"
-            value={formData.lrDate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="vehicleNo">Vehicle No</label>
-          <input
-            type="text"
-            id="vehicleNo"
-            name="vehicleNo"
-            placeholder="Vehicle No"
-            value={formData.vehicleNo}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="vehicleType">Vehicle Type</label>
-          <input
-            type="text"
-            id="vehicleType"
-            name="vehicleType"
-            placeholder="Vehicle Type"
-            value={formData.vehicleType}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="from">From</label>
-          <input
-            type="text"
-            id="from"
-            name="from"
-            placeholder="From"
-            value={formData.from}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="to">To</label>
-          <input
-            type="text"
-            id="to"
-            name="to"
-            placeholder="To"
-            value={formData.to}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="reportingDate">Reporting Date</label>
-          <input
-            type="date"
-            id="reportingDate"
-            name="reportingDate"
-            value={formData.reportingDate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="uploadingDate">Uploading Date</label>
-          <input
-            type="date"
-            id="uploadingDate"
-            name="uploadingDate"
-            value={formData.uploadingDate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="podDate">POD Date</label>
-          <input
-            type="date"
-            id="podDate"
-            name="podDate"
-            value={formData.podDate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="freight">Freight</label>
-          <input
-            type="number"
-            id="freight"
-            name="freight"
-            placeholder="Freight"
-            value={formData.freight}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="advance">Advance</label>
-          <input
-            type="number"
-            id="advance"
-            name="advance"
-            placeholder="Advance"
-            value={formData.advance}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="detention">Detention</label>
-          <input
-            type="number"
-            id="detention"
-            name="detention"
-            placeholder="Detention"
-            value={formData.detention}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="warai">Warai</label>
-          <input
-            type="number"
-            id="warai"
-            name="warai"
-            placeholder="Warai"
-            value={formData.warai}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="penaltyCharges">Penalty Charges</label>
-          <input
-            type="number"
-            id="penaltyCharges"
-            name="penaltyCharges"
-            placeholder="Penalty Charges"
-            value={formData.penaltyCharges}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="balance">Balance</label>
-          <input
-            type="number"
-            id="balance"
-            name="balance"
-            placeholder="Balance"
-            value={formData.balance}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="totalBalance">Total Balance</label>
-          <input
-            type="number"
-            id="totalBalance"
-            name="totalBalance"
-            placeholder="Total Balance"
-            value={formData.totalBalance}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="tds">TDS</label>
-          <input
-            type="number"
-            id="tds"
-            name="tds"
-            placeholder="TDS"
-            value={formData.tds}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__input">
-          <label htmlFor="payableAmount">Payable Amount</label>
-          <input
-            type="number"
-            id="payableAmount"
-            name="payableAmount"
-            placeholder="Payable Amount"
-            value={formData.payableAmount}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form__buttons">
-          <button type="submit" className="button">
-            {isEditMode ? "Update Balance Sheet" : "Add Balance Sheet"}
-          </button>
-        </div>
-      </form>
-      {message && <p>{message}</p>}
     </div>
   );
 }

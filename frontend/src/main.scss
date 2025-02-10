@@ -115,8 +115,21 @@ body {
 }
 
 // Form Styles
+
+.form__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5rem;
+}
+
 .form-group {
-  min-width: 30rem;
+  min-width: 50rem;
+  border: 1px solid black;
+  padding: 5rem;
+  border-radius: 3px;
+  margin-top: 2rem;
 
   label {
     display: block;
@@ -153,16 +166,7 @@ body {
   }
 
   .form__input {
-    width: 90%;
     margin: 1rem auto;
-
-    @include respond(large) {
-      width: 80%;
-    }
-
-    @include respond(xlarge) {
-      width: 70%;
-    }
   }
 
   .form__buttons {

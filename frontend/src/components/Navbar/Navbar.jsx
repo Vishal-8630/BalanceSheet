@@ -1,19 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
-    const [allBalanceSheet, setAllBalanceSheet] = useState(null);
+  const [allBalanceSheet, setAllBalanceSheet] = useState(null);
+  const [isHomePage, setIsHomePage] = useState(true);
+  const location = useLocation();
+  const { isAuthenticated } = useAuth();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (localStorage.getItem("allBalanceSheet")) {
-            setAllBalanceSheet(JSON.parse(localStorage.getItem("allBalanceSheet")));
-        }
-    }, []);
+  const checkHomePage = () => {
+    return location.pathname === "/" || location.pathname === "";
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("allBalanceSheet")) {
+      setAllBalanceSheet(JSON.parse(localStorage.getItem("allBalanceSheet")));
+    }
+  }, []);
+
+  useEffect(() => {
+    setIsHomePage(checkHomePage());
+  }, [location.pathname]);
 
   const handlePrint = () => {
+    const printContent = document.getElementById("print-page").innerHTML;
+    const originalContent = document.body.innerHTML;
+
+    document.body.innerHTML = printContent;
     window.print();
+    document.body.innerHTML = originalContent;
+    window.location.reload();
   };
 
   const handleDownloadPDF = () => {
@@ -33,6 +54,13 @@ const Navbar = () => {
       alert("Please add atleast one balance sheet to download the data");
     }
   };
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Logout successfully");
+    navigate("/");
+  }
+
   return (
     <div className="navbar">
       <div className="navbar__container">
@@ -42,18 +70,38 @@ const Navbar = () => {
             <li className="navbar__ul__li">
               <Link to="/">Home</Link>
             </li>
-            <li className="navbar__ul__li">
-              <Link to="/add-balance-sheet">Add Balance Sheet</Link>
-            </li>
-            <li className="navbar__ul__li">
-              <button onClick={handlePrint}>Print Table</button>
-            </li>
-            <li className="navbar__ul__li">
-              <button onClick={handleDownloadPDF}>Download PDF</button>
-            </li>
-            <li className="navbar__ul__li">
-              <Link to="/admin-mode">Admin Mode</Link>
-            </li>
+            {isAuthenticated ? (
+              <>
+                <li className="navbar__ul__li">
+                  <Link to="/add-balance-sheet">Add Balance Sheet</Link>
+                </li>
+                {isHomePage && (
+                  <li className="navbar__ul__li">
+                    <button onClick={handlePrint}>Print Table</button>
+                  </li>
+                )}
+                {isHomePage && (
+                  <li className="navbar__ul__li">
+                    <button onClick={handleDownloadPDF}>Download PDF</button>
+                  </li>
+                )}
+                <li className="navbar__ul__li">
+                  <Link to="/admin-mode">Admin Mode</Link>
+                </li>
+                <div className="navbar__ul__li">
+                    <button onClick={handleLogout}>Logout</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <li className="navbar__ul__li">
+                  <Link to="auth/login">Login</Link>
+                </li>
+                <li className="navbar__ul__li">
+                  <Link to="auth/register">Register</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
