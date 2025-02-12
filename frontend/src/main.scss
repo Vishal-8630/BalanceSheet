@@ -47,37 +47,82 @@ body {
   max-width: 90%;
 }
 
+.sub__container {
+  max-width: 60rem;
+  margin: 7rem auto;
+  padding: 20px 2rem;
+  border-radius: 3px;
+  background-color: rgb(240, 240, 240);
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2rem;
+  }
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-j-sb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 // Buttons
 .button {
   display: inline-block;
-  padding: 0.7em 1.1em;
-  font-size: 0.9rem;
+  padding: 1em 5em;
+  letter-spacing: 1px;
+  font-size: 1rem;
   color: white;
-  background-color: $primary-color;
+  background-color: rgb(128, 128, 128, 0.6);
   border: none;
   border-radius: 2px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
+  transition: all 0.3s ease-in;
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: rgba(128, 128, 128, 1);
   }
+}
 
-  @include respond(medium) {
-    padding: 0.8em 1.2em;
-    font-size: 1.1rem;
-  }
+.secondary-button {
+  background-color: rgb(240, 240, 240);
+  color: black;
+  border: 1px solid rgb(128, 128, 128);
+  font-weight: 600;
 
-  @include respond(xlarge) {
-    padding: 0.8rem 1.6rem;
+  &:hover {
+    color: white;
+    background-color: rgba(128, 128, 128, 0.5);
   }
+}
+
+/* For Chrome, Safari, Edge, and Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 // Header
 .header {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  margin-top: 2rem;
 
   @include respond(medium) {
     font-size: 2rem;
@@ -121,28 +166,19 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 
 .form-group {
-  min-width: 50rem;
-  border: 1px solid black;
-  padding: 5rem;
+  min-width: 90%;
   border-radius: 3px;
-  margin-top: 2rem;
+  margin-top: 1rem;
 
   label {
     display: block;
     font-weight: bold;
-    font-size: 1.2rem;
-
-    @include respond(large) {
-      font-size: 1.3rem;
-    }
-
-    @include respond(xlarge) {
-      font-size: 1.5rem;
-    }
+    font-size: 1.3rem;
+    margin-bottom: 8px;
   }
 
   input,
@@ -150,18 +186,15 @@ body {
   textarea {
     width: 100%;
     border: none;
-    box-shadow: 1px 1px 5px 0.2px rgba(0, 0, 0, 0.7);
+    // box-shadow: 1px 1px 5px 0.2px rgba(0, 0, 0, 0.7);
+    letter-spacing: 1px;
     border-radius: 2px;
-    padding: 0.6em;
-    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    font-size: 1.1rem;
     outline: none;
 
-    @include respond(medium) {
-      padding: 0.8em;
-    }
-
-    @include respond(large) {
-      padding: 0.9em;
+    &:focus {
+      outline: 1px solid rgb(128, 128, 128);
     }
   }
 
@@ -172,6 +205,7 @@ body {
   .form__buttons {
     text-align: center;
     padding: 1rem 2rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -366,5 +400,49 @@ hr {
         }
       }
     }
+  }
+}
+
+// -------------- Profile ---------------
+.profile__info {
+  margin: 3rem;
+
+  .profile__box {
+    margin: 1rem 0;
+    border-bottom: 1px solid rgb(128, 128, 128);
+    padding-bottom: 0.8rem;
+
+    h3 {
+      font-size: 1.2rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    input {
+      outline: none;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+  }
+}
+
+.profile__button {
+  padding: 1rem 0 3rem 0;
+  margin: 3rem;
+}
+
+.notification__container {
+  height: 50px;
+  background-color: rgb(233, 233, 233);
+  color: black;
+  margin-top: 1rem;
+  border-radius: 4px;
+  padding: 0 1rem;
+
+  .cross {
+    cursor: pointer;
   }
 }

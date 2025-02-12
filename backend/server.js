@@ -6,7 +6,7 @@ const connectDB = require("./db");
 connectDB();
 
 const BalanceSheetRouter = require("./routes/BalanceSheetRoutes");
-const AuthenticationRouter = require("./routes/AuthenticationRoutes");
+const AuthenticationRouter = require("./routes/UserRoutes");
 const AdminRouter = require("./routes/AdminRoutes");
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use("/api", BalanceSheetRouter);
 app.use("/api/auth", AuthenticationRouter)
-app.use("/api", AdminRouter);
+// app.use("/api", AdminRouter);
 
 
 app.listen(5000, () => {

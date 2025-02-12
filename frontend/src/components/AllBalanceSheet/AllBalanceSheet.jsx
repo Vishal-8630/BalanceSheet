@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 
 const BalanceDetails = () => {
   const [allBalanceSheet, setAllBalanceSheet] = useState([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const pageSize = 3;
 
   useEffect(() => {
     getAllBalanceSheet();
@@ -19,6 +21,18 @@ const BalanceDetails = () => {
       console.error("Error fetching balance sheets:", error);
     }
   };
+
+  // const totalPages = Math.ceil(allBalanceSheet.length / pageSize);
+  // const paginatedData = allBalanceSheet.slice(
+  //   (currentPage - 1) * pageSize,
+  //   currentPage * pageSize
+  // );
+
+  // const handlePageChange = (nextPage) => {
+  //   if (nextPage >= 1 && nextPage <= totalPages) {
+  //     setCurrentPage(nextPage);
+  //   }
+  // };
 
   // Calculate totals
   const totals = allBalanceSheet.reduce(
@@ -204,6 +218,23 @@ const BalanceDetails = () => {
             )}
           </tbody>
         </table>
+        {/* <div className="pagination">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div> */}
       </div>
     </div>
   );

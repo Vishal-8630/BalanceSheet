@@ -9,8 +9,7 @@ const Navbar = () => {
   const [allBalanceSheet, setAllBalanceSheet] = useState(null);
   const [isHomePage, setIsHomePage] = useState(true);
   const location = useLocation();
-  const { isAuthenticated } = useAuth();
-  const { logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
   const navigate = useNavigate();
 
   const checkHomePage = () => {
@@ -85,9 +84,9 @@ const Navbar = () => {
                     <button onClick={handleDownloadPDF}>Download PDF</button>
                   </li>
                 )}
-                <li className="navbar__ul__li">
-                  <Link to="/admin-mode">Admin Mode</Link>
-                </li>
+                <div className="navbar__ul__li">
+                    <Link to={'/profile/' + user.id}>Profile</Link>
+                </div>
                 <div className="navbar__ul__li">
                     <button onClick={handleLogout}>Logout</button>
                 </div>

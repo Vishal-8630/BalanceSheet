@@ -1,14 +1,14 @@
-const Authentication = require("../models/AuthenticationModel");
+const User = require("../models/UserModel");
 
 const loginUser = async (req, res) => {
     const { username, password } = req.body;
 
-    if (!username || !password ) {
+    if (!username || !password) {
         return res.status(400).json({ message: "Please fill all the details" });
     }
 
     try {
-        const user = await Authentication.findOne({ username });
+        const user = await User.findOne({ username });
 
         if (!user) {
             return res.status(400).json({ message: "User not found" });
@@ -20,13 +20,15 @@ const loginUser = async (req, res) => {
         }
 
         const token = user.generateToken();
-        res.status(200).json({ 
-            message: "Login successfully", 
+        res.status(200).json({
+            message: "Login successfully",
             user: {
                 id: user._id,
+                fullname: user.fullname,
                 username: user.username,
                 phoneNumber: user.phoneNumber,
-                isVerified: user.isVerified
+                isVerified: user.isVerified,
+                isAdmin: user.isAdmin
             },
             token
         });
@@ -36,9 +38,8 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-    const { username, phoneNumber, password, confirmPassword } = req.body;
-
-    if (!username || !phoneNumber || !password || !confirmPassword) {
+    const { fullname, username, phoneNumber, password, confirmPassword } = req.body;
+    if (!fullname || !username || !phoneNumber || !password || !confirmPassword) {
         return res.status(400).json({ message: "Please fill all the details" });
     }
 
@@ -47,10 +48,10 @@ const registerUser = async (req, res) => {
     }
 
     try {
-        const existingUserByUsername = await Authentication.findOne({ username });
-        const existingUserByPhoneNumber = await Authentication.findOne({ phoneNumber });
+        const existingUserByUsername = await User.findOne({ username });
+        const existingUserByPhoneNumber = await User.findOne({ phoneNumber });
 
-        
+
         if (existingUserByUsername) {
             console.log("user", existingUserByUsername);
             return res.status(400).json({ message: "User already exists with entered username" });
@@ -65,7 +66,7 @@ const registerUser = async (req, res) => {
 
         console.log("OTP:", otp);
 
-        const newUser = new Authentication({ username, phoneNumber, password, otp, otpExpires });
+        const newUser = new User({ fullname, username, phoneNumber, password, otp, otpExpires });
         await newUser.save();
 
         res.status(201).json({ message: "OTP sent. Please verify your phone number." });
@@ -82,7 +83,7 @@ const verifyOtp = async (req, res) => {
     }
 
     try {
-        const user = await Authentication.findOne({ phoneNumber });
+        const user = await User.findOne({ phoneNumber });
 
         if (!user) {
             return res.statu(400).json({ message: "User not found" });
@@ -102,14 +103,53 @@ const verifyOtp = async (req, res) => {
             message: "Phone number verified successfully",
             user: {
                 id: user._id,
+                fullname: user.fullname,
                 username: user.username,
                 phoneNumber: user.phoneNumber,
-                isVerified: user.isVerified
+                isVerified: user.isVerified,
+                isAdmin: user.isAdmin
             },
             token
         });
     } catch (error) {
         return res.status(400).json({ message: "Error Verifying OTP", error: error.message });
+    }
+}
+
+const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { fullname, username, phoneNumber } = req.body;
+
+    try {
+        const user = await User.findOne({ _id: id });
+
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        if (user.phoneNumber !== phoneNumber) {
+            user.isVerified = false;
+        }
+
+        user.fullname = fullname;
+        user.username = username;
+        user.phoneNumber = phoneNumber;
+        await user.save();
+
+        return res.status(200).json({
+            message: "User updated successfully", 
+            user: {
+                id: user._id,
+                fullname: user.fullname,
+                username: user.username,
+                phoneNumber: user.phoneNumber,
+                isVerified: user.isVerified,
+                isAdmin: user.isAdmin
+            }
+        });
+
+    } catch (error) {
+        return res.status(500).json({ message: "Error while updating user", error: error.message });
     }
 }
 
@@ -121,5 +161,6 @@ module.exports = {
     loginUser,
     registerUser,
     verifyOtp,
+    updateUser,
     logoutUser
 }

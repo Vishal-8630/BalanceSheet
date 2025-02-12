@@ -15,6 +15,7 @@ const Authentication = () => {
     password: "",
   });
   const [registerDetails, setRegisterDetails] = useState({
+    fullname: "",
     username: "",
     phoneNumber: "",
     password: "",
@@ -52,7 +53,7 @@ const Authentication = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-        navigate("/");
+      navigate("/");
     }
   }, [isAuthenticated]);
 
@@ -141,6 +142,17 @@ const Authentication = () => {
       <h1 className="header">Register</h1>
       <form className="form-group" onSubmit={handleFormSubmit}>
         <div className="form__input">
+          <label htmlFor="fullname">Full Name:</label>
+          <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            placeholder="Full Name"
+            value={registerDetails.fullname}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="form__input">
           <label htmlFor="username">Username</label>
           <input
             type="text"
@@ -186,7 +198,7 @@ const Authentication = () => {
         </div>
         <div className="form__buttons">
           <button type="submit" className="button">
-            Login
+            Register
           </button>
         </div>
       </form>
@@ -219,7 +231,7 @@ const Authentication = () => {
   );
 
   return (
-    <div>
+    <div className="sub__container">
       {formMode.isLoginMode
         ? loginForm
         : formMode.isRegisterMode
